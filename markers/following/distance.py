@@ -109,7 +109,9 @@ def process_frame(frame):
             frame = cv2.aruco.drawDetectedMarkers(frame, np.array([m_corner]), np.array([m_id]))
             rvecs , tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(np.array([m_corner]), 6.5, camera_matrix, camera_distortion)
             # tvecs[0][0] is [smth, smth, distance]
-            i_str = f"tvec: {tvecs[0][0].tolist()}"
+            tvec = tvecs[0][0]
+            rvec = rvecs[0][0]
+            i_str = f"tvec: {tvecs.tolist()}"
             cv2.putText(frame, i_str, (0, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
     if ids is None or not is_find:
         cv2.putText(frame, f"No marker", (0, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)

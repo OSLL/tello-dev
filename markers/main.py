@@ -1,6 +1,7 @@
 import sys
 import signal
 import following.following as flw
+import following.following_coords as flw_coords
 import following.distance as dst
 
 
@@ -28,6 +29,9 @@ if __name__ == "__main__":
     if cmd == "following":
         stop = flw.stop
         main = flw.main
+    if cmd == "following_coords":
+        stop = flw_coords.stop
+        main = flw_coords.main
     elif cmd == "distance":
         main = dst.main()
     else:
