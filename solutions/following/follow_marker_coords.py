@@ -18,7 +18,7 @@ def dist_beetwen_points(p1, p2):
 class FollowMarkerWithCoords():
 
     def __init__(self):
-        self.video_writer = cv2.VideoWriter('drone_stream.avi', cv2.VideoWriter_fourcc(*'XVID'), FRAME_RATE - 5, FRAME_SIZE)
+        self.video_writer = cv2.VideoWriter('drone_stream.avi', cv2.VideoWriter_fourcc(*'XVID'), FRAME_RATE, FRAME_SIZE)
         self.actions = Queue(QUEUE_SIZE)
         self.last_state = State.START
         self.last_time = time.process_time()
@@ -85,17 +85,6 @@ class FollowMarkerWithCoords():
         return frame
 
     def drone_instructions(self, tello):
-        '''last_state = State.READY
-        self.last_time = time.process_time()
-        while not self.is_stopped:
-            try:
-                state, movements = self.actions.get(block=False, timeout=0.25)
-                self.actions.task_done()
-                if state == State.END:
-                    break
-            except Empty:
-                self.last_state = State.READY
-            self.last_battery_charge = tello.get_battery()'''
         tello.takeoff()
         tello.move_up(50)
         self.last_time = time.process_time()
