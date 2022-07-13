@@ -5,13 +5,17 @@ from solutions.simple_use.use_with_lib import SimpleLibDemo
 from solutions.simple_use.use_with_socket import SimpleSocketDemo
 from solutions.simple_use.test_all_sensors import TestAllSensors
 from solutions.following.follow_marker_coords import FollowMarkerWithCoords
+from solutions.following.follow_marker_pixels import FollowMarkerWithPixels
+from solutions.default import DefaultSolution
 
 
 all_solutions = {
+    "default": DefaultSolution,
     "simple_lib_demo": SimpleLibDemo,
     "simple_socket_demo": SimpleSocketDemo,
     "test_all_sensors_demo": TestAllSensors,
     "follow_marker_with_coords": FollowMarkerWithCoords,
+    "follow_marker_with_pixels": FollowMarkerWithPixels,
 }
 
 sigint_counter = 0
@@ -31,7 +35,7 @@ def signal_handler(sig, frame):
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Drone solutions")
-    parser.add_argument("--solution", choices=all_solutions.keys(), required=True, help="Solution for execution")
+    parser.add_argument("--solution", choices=all_solutions.keys(), default="default", help="Solution for execution")
     args = parser.parse_args()
     return all_solutions[args.solution]
 

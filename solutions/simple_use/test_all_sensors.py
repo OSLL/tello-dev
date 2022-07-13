@@ -3,6 +3,7 @@ import time
 import threading
 from djitellopy import Tello
 from utils.write_text import write_status_on_image
+from utils.drone_status import get_full_drone_status
 
 
 class TestAllSensors():
@@ -23,22 +24,11 @@ class TestAllSensors():
 
                 if cur_frame is None:
                     continue
-                write_status_on_image(cur_frame, self.get_drone_status())
+                write_status_on_image(cur_frame, get_full_drone_status(self.tello))
                 cv2.imshow("Drone stream", cur_frame)
                 cv2.waitKey(1)
         except Exception as exception:
             print("Exception in drone_video:", exception)
-
-    def get_drone_status(self):
-        return {
-            "height": self.tello.get_height(),
-            "(pitch, yaw, roll)": (self.tello.get_pitch(), self.tello.get_yaw(), self.tello.get_roll()),
-            "temperature": self.tello.get_temperature(),
-            "speed": (self.tello.get_speed_x(), self.tello.get_speed_y(), self.tello.get_speed_z()),
-            "flight time": self.tello.get_flight_time(),
-            "acceleration": (self.tello.get_acceleration_x(), self.tello.get_acceleration_y(), self.tello.get_acceleration_z()),
-            "battery": f"{self.tello.get_battery()}%",
-        }
 
     def drone_prog(self):
         self.tello.takeoff()
