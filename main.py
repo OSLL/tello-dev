@@ -4,12 +4,14 @@ import argparse
 from solutions.simple_use.use_with_lib import SimpleLibDemo
 from solutions.simple_use.use_with_socket import SimpleSocketDemo
 from solutions.simple_use.test_all_sensors import TestAllSensors
+from solutions.following.follow_marker_coords import FollowMarkerWithCoords
 
 
 all_solutions = {
     "simple_lib_demo": SimpleLibDemo,
     "simple_socket_demo": SimpleSocketDemo,
     "test_all_sensors_demo": TestAllSensors,
+    "follow_marker_with_coords": FollowMarkerWithCoords,
 }
 
 sigint_counter = 0

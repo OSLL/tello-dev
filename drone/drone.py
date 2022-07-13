@@ -2,23 +2,22 @@ import cv2
 import time
 import threading
 from djitellopy import Tello
+from utils.write_text import write_status_on_image
 
 
 class Drone:
 
-    def __init__(self, drone_prog, frame_processing, show_stream=True, frame_rate=None):
+    def __init__(self, drone_prog, frame_processing, show_stream=True):
         self.tello = Tello()
         self.tello.connect()
         self.backreader = None
         self.active = False
 
         self.video_stream_thread = threading.Thread(target=self.frame_handler)
-        print(f"Drone battery charge is {self.tello.get_battery()}%")
 
         self.drone_prog = drone_prog
         self.frame_processing = frame_processing
         self.show_stream = show_stream
-        self.frame_rate = frame_rate
 
     def run_program(self):
         self.active = True
@@ -53,14 +52,10 @@ class Drone:
                     continue
 
                 show_frame = self.frame_processing(cur_frame)
+                write_status_on_image(show_frame, {"battery": f"{self.tello.get_battery()}%"})
                 if self.show_stream is True and show_frame is not None:
                     cv2.imshow("Drone stream", show_frame)
-                    k = cv2.waitKey(1)
-                    if k & 0xFF == ord("q"):
-                        self.tello.land()
-                        self.tello.end()
-                        break
-                time.sleep(1 / self.frame_rate)
+                    cv2.waitKey(1)
         except Exception as exception:
             raise exception
             print("Exception in Drone.frame_handler:", exception)
