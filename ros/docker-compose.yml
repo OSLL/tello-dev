@@ -1,0 +1,17 @@
+version: "3"
+services:
+  tello-ros:
+    container_name: tello-ros
+    build: .
+    devices:
+      - "/dev/dri:/dev/dri"
+    environment:
+      DISPLAY: $DISPLAY
+      PYTHONUNBUFFERED: 1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    ports:
+      - 8889:8889/udp
+      - 8890:8890/udp
+      - 11111:11111/udp
+    

@@ -1,0 +1,3 @@
+<launch>
+	<node name="tello_driver_node" pkg="tello_driver" type="tello_driver_node.py" output="screen"/>
+</launch>
