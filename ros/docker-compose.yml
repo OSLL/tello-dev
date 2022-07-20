@@ -4,10 +4,11 @@ services:
     container_name: tello-ros
     build: .
     devices:
-      - "/dev/dri:/dev/dri"
+      - /dev/dri:/dev/dri
     environment:
       DISPLAY: $DISPLAY
       PYTHONUNBUFFERED: 1
+      NO_AT_BRIDGE: 1
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
     ports:
