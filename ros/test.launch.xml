@@ -1,6 +1,0 @@
-<launch>
-	<node pkg="tello_driver" exec="tello_driver_main" name="tello_driver_main" namespace="tello" output="log"/>
-  <node pkg="image_view" exec="image_view" name="image_view" namespace="view" output="screen">
-    <remap from="image" to="/tello/image_raw"/>
-  </node>
-</launch>

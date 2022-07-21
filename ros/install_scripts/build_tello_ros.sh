@@ -1,6 +1,6 @@
 #!/bin/bash
-mkdir -p builds/src
-cd builds/src
+mkdir -p /builds/src
+cd /builds/src
 git clone https://github.com/clydemcqueen/tello_ros.git
 git clone https://github.com/ptrmu/ros2_shared.git
 cd ..

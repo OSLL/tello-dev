@@ -1,0 +1,13 @@
+<launch>
+	<node pkg="tello_driver" exec="tello_driver_main" name="tello_driver_main" namespace="tello" output="log">
+    <!--<param name="drone_ip" value="127.0.0.1" />  for testing-->
+  </node>
+  <node pkg="image_view" exec="image_view" name="image_view" namespace="view" output="screen">
+    <remap from="image" to="/process/output_images"/>
+  </node>
+  <node pkg="tello_ros" exec="tello_pub" name="auto_control" namespace="control" output="log"/>
+  <node pkg="tello_ros" exec="img_process" name="image_process" namespace="process" output="log">
+    <remap from="input_images" to="/tello/image_raw"/>
+    <remap from="flight_status" to="/tello/flight_data"/>
+  </node>
+</launch>
