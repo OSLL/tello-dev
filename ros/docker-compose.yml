@@ -5,6 +5,7 @@ services:
     build: .
     devices:
       - /dev/dri:/dev/dri
+      - /dev/input:/dev/input
     environment:
       DISPLAY: $DISPLAY
       PYTHONUNBUFFERED: 1
