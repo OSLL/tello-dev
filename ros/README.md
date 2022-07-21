@@ -2,7 +2,7 @@
 
 ## Current status
 
-***Tello driver connets to drone, can run simple commands for drone. No hand control***
+***Tello driver connets to drone, can run simple commands for drone. Control with gamepad***
 
 ## Build and run
 
@@ -16,12 +16,38 @@ Run: `./run.sh`
 
 | Script name             | Action |
 |:------------------------|:-------|
-| `run.sh`                | Runs docker container |
-| `stop_solutions.sh`     | Stops current solution and lands drone |
-| `continue_solutions.sh` | Continue stopped solution *Not work for now* |
-| `stop.sh`               | Stops solution and docker container |
+| `run.sh`                | Starts the docker container |
+| `stop_solutions.sh`     | Stops the current solution and lands the drone |
+| `continue_solutions.sh` | Continues the stopped solution (*Not working yet*) |
+| `stop.sh`               | Stops the solution and the docker container |
 
-## Twist and drone axis
+***IMPORTANT: Use the `stop.sh` script to stop the current flight. This script sends "stay" command(`rc 0 0 0 0`) to the drone and lands it. If you stop the container with Ctrl+C, the drone will remember the last command and continue executing it for 15 seconds. During this time the drone can damage the enviroment and itself***
+
+***NOTE: The `stop.sh` script takes a several seconds to stop and land the drone. Be careful***
+
+## Control drone via gamepad
+
+* Connects the gamepad to your PC
+* Replace `./test.launch.xml` with `./control.launch` in `scripts/start.sh` file
+* Connect to the drone's wifi network
+* Run the container with the `run.sh` script
+* Use the gamepad to control the drone:
+  * Button Menu -- take off the drone
+  * Button View -- landing the drone
+  * Left stick:
+    * Up/Down -- move drone up/down
+    * Left/Right -- rotate drone counterclockwise/clockwise
+  * Right stick:
+    * Up/Down -- move drone forward/backward
+    * Left/Right -- move drone left/right
+* Stop the container with the `stop.sh` script (or Ctrl+C)
+
+## Bugs
+
+* When the drone moves, it has an error in movements. If the drone moves left-right indefinitely, it will not stay in line, but will move slightly forward
+* When controlling the drone with gamepad, sometimes it remembers the last direction of movement and keeps moving in that direction
+
+## Twist message axis and drone axis
 
 ### Drone axis in rc command
 
@@ -37,7 +63,7 @@ Run: `./run.sh`
 * `Twist.linear.z` is down/up, where up is positive value
 * `Twist.angular.z` is clockwise/counterclockwise, where counterclockwise is positive value
 
-### Translate Twist axis to drone axis
+### Translate Twist axis to drone rc command
 
 * `Twist.linear.x` -> `rc 0 lx 0 0`
 * `Twist.linear.y` -> `rc -ly 0 0 0`
@@ -45,9 +71,12 @@ Run: `./run.sh`
 * `Twist.angular.z` -> `rc 0 0 0 -az`
 
 
-## ROS nodes links
+## ROS drivers links
 
-* [Link1](https://wiki.ros.org/tello_driver)
-* [Link2](https://github.com/clydemcqueen/tello_ros)
-* [Link3](https://github.com/tentone/tello-ros2)
-* [Link4](https://github.com/MoynaChen/Tello_ROS)
+***The library from clydemcqueen is now used as a driver***
+
+* [ROS1 package](https://wiki.ros.org/tello_driver)
+* [Lib from clydemcqueen](https://github.com/clydemcqueen/tello_ros). Disadvantages:
+  * Always shows the original video stream from the drone with fixed name
+* [Lib from tentone](https://github.com/tentone/tello-ros2)
+* [Lib from MoynaChen](https://github.com/MoynaChen/Tello_ROS)
