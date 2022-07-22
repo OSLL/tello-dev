@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'tello_pub = tello_ros.publisher:main',
-            'img_process = tello_ros.img_subscriber:main'
+            'tello_simple_solution = tello_ros.tello_simple_solution:main',
+            'image_processing = tello_ros.image_processing:main'
         ],
     },
 )

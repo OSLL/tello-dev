@@ -28,7 +28,7 @@ Run: `./run.sh`
 ## Control drone via gamepad
 
 * Connects the gamepad to your PC
-* Replace `./test.launch.xml` with `./control.launch` in `scripts/start.sh` file
+* Replace `./simple_solution.launch` with `./control.launch` in `scripts/start.sh` file
 * Connect to the drone's wifi network
 * Run the container with the `run.sh` script
 * Use the gamepad to control the drone:
@@ -42,10 +42,15 @@ Run: `./run.sh`
     * Left/Right -- move drone left/right
 * Stop the container with the `stop.sh` script (or Ctrl+C)
 
+## Development
+
+All nodes that send commands to the tello_driver, **must** be derived from `BasicTelloControlNode`
+
 ## Bugs
 
 * When the drone moves, it has an error in movements. If the drone moves left-right indefinitely, it will not stay in line, but will move slightly forward
 * When controlling the drone with gamepad, sometimes it remembers the last direction of movement and keeps moving in that direction
+* In `rclpy`, `Rate.sleep()` does not work in the main thread. An extra thread must be used ([[1]](https://docs.ros.org/en/rolling/How-To-Guides/Sync-Vs-Async.html)[[2]](https://answers.ros.org/question/358343/rate-and-sleep-function-in-rclpy-library-for-ros2/)) (***Need to check***)
 
 ## Twist message axis and drone axis
 
@@ -78,5 +83,7 @@ Run: `./run.sh`
 * [ROS1 package](https://wiki.ros.org/tello_driver)
 * [Lib from clydemcqueen](https://github.com/clydemcqueen/tello_ros). Disadvantages:
   * Always shows the original video stream from the drone with fixed name
+  * It is impossible to send more than two TelloAction, and the second TelloAction call blocks the node forever
+  * `Call` (not `call_async`) on TelloAction service does not work
 * [Lib from tentone](https://github.com/tentone/tello-ros2)
 * [Lib from MoynaChen](https://github.com/MoynaChen/Tello_ROS)
