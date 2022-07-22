@@ -1,3 +1,4 @@
-opencv-python
-djitellopy
 numpy
+opencv-python
+opencv-contrib-python
+djitellopy
