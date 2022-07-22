@@ -5,7 +5,6 @@ import numpy as np
 
 FRAME_RATE = 30
 FRAME_SIZE = (960, 720)
-MARKER_LEN = 6.5 # Size in cm
 MARKER_SIZE = 50 # in pixels
 MARKER_SIZE_RANGE = 15
 MARKER_NUMBER = 304

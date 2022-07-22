@@ -5,8 +5,8 @@ import numpy as np
 from queue import Queue, Empty
 from drone.drone import Drone
 from solutions.following.config import FRAME_RATE, FRAME_SIZE, DISTANCE, DISTANCE_RANGE,\
-    MARKER_LEN, ARUCO_DICT, ARUCO_PARAMS, QUEUE_SIZE, camera_matrix, camera_distortion,\
-    TIMEOUT, MARKER_NUMBER, SPEED
+    ARUCO_DICT, ARUCO_PARAMS, QUEUE_SIZE, TIMEOUT, MARKER_NUMBER, SPEED
+from config import camera_matrix, camera_distortion, MARKER_LEN
 from solutions.following.state import State
 from utils.write_text import write_status_on_image
 

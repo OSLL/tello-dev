@@ -7,6 +7,7 @@ from solutions.simple_use.test_all_sensors import TestAllSensors
 from solutions.following.follow_marker_coords import FollowMarkerWithCoords
 from solutions.following.follow_marker_pixels import FollowMarkerWithPixels
 from solutions.default import DefaultSolution
+from solutions.calibration.calibrate_camera import CalibrateCamera
 
 
 all_solutions = {
@@ -16,6 +17,7 @@ all_solutions = {
     "test_all_sensors_demo": TestAllSensors,
     "follow_marker_with_coords": FollowMarkerWithCoords,
     "follow_marker_with_pixels": FollowMarkerWithPixels,
+    "calibrate_camera": CalibrateCamera,
 }
 
 sigint_counter = 0
