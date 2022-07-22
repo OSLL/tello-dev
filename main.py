@@ -37,7 +37,7 @@ def signal_handler(sig, frame):
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Drone solutions")
-    parser.add_argument("--solution", choices=all_solutions.keys(), default="default", help="Solution for execution")
+    parser.add_argument("-s", "--solution", choices=all_solutions.keys(), default="default", help="Solution for execution")
     args = parser.parse_args()
     return all_solutions[args.solution]
 

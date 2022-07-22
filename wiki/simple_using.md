@@ -1,14 +1,17 @@
 # Простое использование дрона
 
-## DGITelloPy
+## Библиотеки
 
-Для управления дроном есть библиотека на Python ([Ссылка](https://github.com/damiafuentes/DJITelloPy))
+* [DJITelloPy](https://github.com/damiafuentes/DJITelloPy)
+* [TelloPy](https://github.com/hanyazou/TelloPy)
+* [python-tello](https://github.com/gheinzer/python-tello)
 
-API прост и удобен. В данной библиотеке уже реализовано декодирование получаемых кадров
+На данный момент используется библиотека *DJITelloPy*, потому что так сложилось исторически
 
-### Примеры
+### Примеры использования
 
-1. Файл `simple_use/use_with_lib.py`
+1. Файл `solutions/simple_use/use_with_lib.py`
+2. Файл `solutions/simple_use/test_all_sensors.py`
 
 ## Использование при помощи сокетов
 
