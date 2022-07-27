@@ -4,4 +4,4 @@ source /builds/install/setup.bash
 
 source ./install/setup.bash
 
-ros2 launch ./simple_solution.launch
+ros2 launch ./marker_follower.launch

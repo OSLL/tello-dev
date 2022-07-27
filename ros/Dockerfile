@@ -6,6 +6,7 @@ RUN apt-get update && \
         ros-foxy-image-view \
         ros-foxy-cv-bridge \
         ros-foxy-joy \
+        ros-foxy-camera-calibration \
         libasio-dev \
         python3-rosinstall \
         python3-pip \

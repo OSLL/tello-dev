@@ -21,7 +21,10 @@ setup(
     entry_points={
         'console_scripts': [
             'tello_simple_solution = tello_ros.tello_simple_solution:main',
-            'image_processing = tello_ros.image_processing:main'
+            'image_processing = tello_ros.image_processing:main',
+            'marker_follower = tello_ros.aruco_marker_follower:main',
+            'manager_node = tello_ros.manager_node:main',
+            'middleware_joy_node = tello_ros.middleware_joy_node:main'
         ],
     },
 )

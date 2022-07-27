@@ -22,15 +22,16 @@ class BasicTelloControlNode(Node):
 
     def control_sub_callback(self, msg):
         if self.active is None:
-            self.get_logger().info(f"Received {msg.data} from /control, during node starting. Skipping message")
+            self.get_logger().info(f"Received {msg.data} from /control, during node initialization. Skipping message")
             return
         self.get_logger().info(f"From /control received {msg.data}")
-        if msg.data and not self.active:
-            self.start_node()
-            self.get_logger().info(f"Continue work")
-        elif not msg.data and self.active:
-            self.stop_and_land_drone()
-            self.get_logger().info(f"Work is stopped")
+        if msg.data:
+            self.active = True
+            self.send_twist_command(0.0, 0.0, 0.0, 0.0)
+            self.get_logger().info(f"Run solution")
+        else:
+            self.active = False
+            self.get_logger().info(f"Stop solution")
 
     def send_twist_command(self, x, y, z, rotation):
         if not isinstance(x, float):
@@ -101,7 +102,8 @@ class BasicTelloControlNode(Node):
         while not self.send_tello_action("land"):
             self.get_logger().info("Error on sending land")
 
-    def start_node(self):
-        while not self.send_tello_action("takeoff"):
-            self.get_logger().info("Error on sending takeoff")
+    def start_node(self, takeoff_drone=False):
+        if takeoff_drone:
+            while not self.send_tello_action("takeoff"):
+                self.get_logger().info("Error on sending takeoff")
         self.active = True
