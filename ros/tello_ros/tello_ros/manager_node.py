@@ -4,7 +4,7 @@ from std_msgs.msg import Bool
 from tello_msgs.srv import TelloAction
 
 
-help_str = "Available commands:\n* run -- run solution\n* stop -- stop solution"\
+help_str = "Available commands:\n* [r]un -- run solution\n* [s]top -- stop solution"\
            "\n* takeoff -- take off the drone\n* land -- land the drone\n* shutdown -- shutdown manager node"
 
 
@@ -27,9 +27,9 @@ class ManagerNode(Node):
 
     def parse_and_send_command(self, string: str) -> bool:
         ret = True
-        if string == "run":
+        if string in ["r", "run"]:
             self.send_control_command(True)
-        elif string == "stop":
+        elif string in ["s", "stop"]:
             self.send_control_command(False)
         elif string == "takeoff":
             self.send_action_command("takeoff")
@@ -44,6 +44,8 @@ class ManagerNode(Node):
 def main(args=None):
     rclpy.init(args=args)
     node = ManagerNode()
+    print("ManagerNode\n")
+    print(help_str)
     try:
         while True:
             s = input(">>> ")
