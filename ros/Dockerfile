@@ -23,6 +23,6 @@ COPY requiremetns.txt requiremetns.txt
 RUN pip3 install -r requiremetns.txt && mkdir src
 COPY ./tello_ros ./src/tello_ros
 RUN colcon build
-COPY ./launch/ ./scripts/ ./
+COPY ./launch/ ./scripts/ ./camera_settings/camera.yaml ./
 
 ENTRYPOINT ["/bin/bash", "-c", "./start.sh"]

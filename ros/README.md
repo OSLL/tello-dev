@@ -51,35 +51,14 @@ See this [guide](./wiki/development.md)
 * When the drone moves, it has an error in movements. If the drone moves left-right indefinitely, it will not stay in line, but will move slightly forward
 * In `rclpy`, `Rate.sleep()` does not work in the main thread. An extra thread must be used ([[1]](https://docs.ros.org/en/rolling/How-To-Guides/Sync-Vs-Async.html)[[2]](https://answers.ros.org/question/358343/rate-and-sleep-function-in-rclpy-library-for-ros2/)) (***Need to check***)
 
-## Twist message axis and drone axis
-
-### Drone axis in rc command
-
-* First values is left/right, where right is positive value
-* Second value is backward/forward, where forward is positive value
-* Third value is down/up, where up is positive value
-* Fourth value is rotation counterclockwise/clockwise, where clockwise is positive value
-
-### Twist axis
-
-* `Twist.linear.x` is backward/forward, where forward is positive value
-* `Twist.linear.y` is right/left, where left is positive value
-* `Twist.linear.z` is down/up, where up is positive value
-* `Twist.angular.z` is clockwise/counterclockwise, where counterclockwise is positive value
-
-### Translate Twist axis to drone rc command
-
-* `Twist.linear.x` -> `rc 0 lx 0 0`
-* `Twist.linear.y` -> `rc -ly 0 0 0`
-* `Twist.linear.z` -> `rc 0 0 lz 0`
-* `Twist.angular.z` -> `rc 0 0 0 -az`
-
 
 ## ROS drivers links
 
 ***The library from clydemcqueen is now used as a driver***
 
 ### [ROS1 package](https://wiki.ros.org/tello_driver)
+
+***Not working, cannot run tello driver node***
 
 ### [Lib from clydemcqueen](https://github.com/clydemcqueen/tello_ros)
 
