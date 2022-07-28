@@ -1,11 +1,23 @@
+from enum import Enum, auto
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Bool
 from tello_msgs.srv import TelloAction
 
 
-help_str = "Available commands:\n* [r]un -- run solution\n* [s]top -- stop solution"\
-           "\n* takeoff -- take off the drone\n* land -- land the drone\n* shutdown -- shutdown manager node"
+help_str = "Available commands:\n"\
+           "* [r]un -- run solution\n"\
+           "* [s]top -- stop solution\n"\
+           "* takeoff -- take off the drone\n"\
+           "* land -- land the drone\n"\
+           "* call <cmd> -- send <cmd> to the drone (rc command is not allowed)\n"\
+           "* shutdown -- shutdown manager node"
+
+
+class Result(Enum):
+    OK = auto()
+    UNKNOWN = auto()
+    PROHIBITION = auto()
 
 
 class ManagerNode(Node):
@@ -26,18 +38,23 @@ class ManagerNode(Node):
         self.srv_action.call_async(request)
 
     def parse_and_send_command(self, string: str) -> bool:
-        ret = True
-        if string in ["r", "run"]:
+        cmd = string.strip()
+        ret = Result.OK
+        if cmd in ["r", "run"]:
             self.send_control_command(True)
-        elif string in ["s", "stop"]:
+        elif cmd in ["s", "stop"]:
             self.send_control_command(False)
-        elif string == "takeoff":
-            self.send_action_command("takeoff")
-        elif string == "land":
+        elif cmd in ["takeoff", "land"]:
             self.send_control_command(False)
-            self.send_action_command("land")
+            self.send_action_command(cmd)
+        elif cmd.startswith("call "):
+            cmd = cmd[5:]
+            if cmd.find("rc") != -1:
+                ret = Result.PROHIBITION
+            else:
+                self.send_action_command(cmd)
         else:
-            ret = False
+            ret = Result.UNKNOWN
         return ret
 
 
@@ -52,9 +69,12 @@ def main(args=None):
             if s == "shutdown":
                 print("Shutdown ManagerNode")
                 break
-            if not node.parse_and_send_command(s):
+            res = node.parse_and_send_command(s)
+            if res == Result.UNKNOWN:
                 print("Unknown command", s)
                 print(help_str)
+            elif res == Result.PROHIBITION:
+                print("Command", s, "is not allowed")
     except Exception as exception:
         print("Exception:", exception)
     node.destroy_node()
