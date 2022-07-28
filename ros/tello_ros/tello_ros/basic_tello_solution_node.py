@@ -7,7 +7,7 @@ from tello_msgs.srv import TelloAction
 from tello_msgs.msg import TelloResponse
 
 
-class BasicTelloControlNode(Node):
+class BasicTelloSolutionNode(Node):
 
     QUEUE_SIZE = 10
 
@@ -26,12 +26,9 @@ class BasicTelloControlNode(Node):
             return
         self.get_logger().info(f"From /control received {msg.data}")
         if msg.data:
-            self.active = True
-            self.send_twist_command(0.0, 0.0, 0.0, 0.0)
-            self.get_logger().info(f"Run solution")
+            self.run_solution()
         else:
-            self.active = False
-            self.get_logger().info(f"Stop solution")
+            self.stop_solution()
 
     def send_twist_command(self, x, y, z, rotation):
         if not isinstance(x, float):
@@ -96,14 +93,12 @@ class BasicTelloControlNode(Node):
         #
         # self.received_response = response.str
 
-    def stop_and_land_drone(self):
+    def stop_solution(self):
         self.active = False
         self.send_twist_command(0.0, 0.0, 0.0, 0.0)
-        while not self.send_tello_action("land"):
-            self.get_logger().info("Error on sending land")
+        self.get_logger().info(f"Stop solution")
 
-    def start_node(self, takeoff_drone=False):
-        if takeoff_drone:
-            while not self.send_tello_action("takeoff"):
-                self.get_logger().info("Error on sending takeoff")
+    def run_solution(self):
         self.active = True
+        self.send_twist_command(0.0, 0.0, 0.0, 0.0)
+        self.get_logger().info(f"Run solution")

@@ -7,9 +7,9 @@ from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
 from tello_msgs.msg import FlightData
 from tello_ros.config import mtx, dist, MARKER_LEN, MARKER_NUMBER, ARUCO_DICT, ARUCO_PARAMS
-from tello_ros.basic_tello_control_node import BasicTelloControlNode
+from tello_ros.basic_tello_solution_node import BasicTelloSolutionNode
 
-class ArUcoMarkerFollower(BasicTelloControlNode):
+class ArUcoMarkerFollower(BasicTelloSolutionNode):
 
     FONT = cv2.FONT_HERSHEY_TRIPLEX
     FONT_SIZE = 1

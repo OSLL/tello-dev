@@ -44,7 +44,7 @@ Run: `./run.sh`
 
 ## Development
 
-All nodes that send commands to the tello_driver, **must** be derived from `BasicTelloControlNode`
+See this [guide](./wiki/development.md)
 
 ## Bugs
 

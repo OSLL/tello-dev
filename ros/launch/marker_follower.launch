@@ -4,7 +4,7 @@
 	<node pkg="tello_driver" exec="tello_driver_main" name="tello_driver_main" namespace="tello" output="log">
     <!--<param name="drone_ip" value="127.0.0.1" />  for testing-->
   </node>
-  <!-- controling drone -->
+  <!-- drone manual control -->
   <node pkg="tello_ros" exec="middleware_joy_node" name="middleware_joy_node" namespace="middleware" output="log">
     <remap from="output_cmd_vel" to="/tello/cmd_vel"/>
     <remap from="output_tello_action" to="/tello/tello_action"/>
@@ -14,7 +14,7 @@
     <remap from="tello_action" to="/middleware/input_tello_action"/>
   </node>
   <node pkg="joy" exec="joy_node" name="tello_joy_main" namespace="input" output="screen"/>
-  <!-- end of controling drone -->
+  <!-- end of drone manual control -->
   <node pkg="tello_ros" exec="image_processing" name="image_processing" namespace="processing" output="log">
     <remap from="input_images" to="/tello/image_raw"/>
     <remap from="flight_status" to="/tello/flight_data"/>
