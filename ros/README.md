@@ -42,6 +42,17 @@ Available commands:
     * Left/Right -- move drone left/right
 * Stop the container with the `stop.sh` script (or Ctrl+C)
 
+## Camera calibration
+
+*Build container*: `docker-compose -f docker-compose-camera-calibrate.yml build`
+
+*Run container*: `./calibrate_camera.sh`
+
+After calibration, the results are saved in `/tmp` directory inside the container.
+Use `get_camera_settings.sh` script to retrieve the results from the container.
+It will save `.yaml` file to the `camera_settings` directory and `calibrationdata.tar.gz` archive to the current directory.
+
+
 ## Development
 
 See this [guide](./wiki/development.md)
