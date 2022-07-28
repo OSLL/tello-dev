@@ -1,29 +1,29 @@
 # ROS
 
-## Current status
-
-***Tello driver connets to drone, can run simple commands for drone. Control with gamepad***
-
 ## Build and run
 
 ROS nodes are runned in docker container
 
-Build: `docker-compose build`
+*Build*: `docker-compose build`
 
-Run: `./run.sh`
+*Run*: `./run.sh`
 
-### Other scripts
+The `run.sh` script runs a docker container named `tello-ros` with the solution.
+The solution is specified by the environment variable `SOLUTION_NAME` in the `docker-compose.yml` file.
 
-| Script name             | Action |
-|:------------------------|:-------|
-| `run.sh`                | Starts the docker container |
-| `stop_solutions.sh`     | Stops the current solution and lands the drone |
-| `continue_solutions.sh` | Continues the stopped solution (*Not working yet*) |
-| `stop.sh`               | Stops the solution and the docker container |
+The `exec_script.sh` script executes a specified script in the docker container. Available scripts:
+* `manager_node` -- runs `ManagerNode` (*the default script*)
 
-***IMPORTANT: Use the `stop.sh` script to stop the current flight. This script sends "stay" command(`rc 0 0 0 0`) to the drone and lands it. If you stop the container with Ctrl+C, the drone will remember the last command and continue executing it for 15 seconds. During this time the drone can damage the enviroment and itself***
+## Manager Node
 
-***NOTE: The `stop.sh` script takes a several seconds to stop and land the drone. Be careful***
+`MangerNode` is responsible for switching between solution and manual control (see more [here](./wiki/development.md#node-managernode)).
+Available commands:
+* `r/run` -- run solution
+* `s/stop` -- stop solution
+* `takeoff` -- take off the drone
+* `land` -- land the drone
+* `call <cmd>` -- send `<cmd>` to the drone (`rc` command is not allowed)
+* `shutdown` -- shutdown manager node
 
 ## Control drone via gamepad
 
@@ -49,7 +49,6 @@ See this [guide](./wiki/development.md)
 ## Bugs
 
 * When the drone moves, it has an error in movements. If the drone moves left-right indefinitely, it will not stay in line, but will move slightly forward
-* When controlling the drone with gamepad, sometimes it remembers the last direction of movement and keeps moving in that direction
 * In `rclpy`, `Rate.sleep()` does not work in the main thread. An extra thread must be used ([[1]](https://docs.ros.org/en/rolling/How-To-Guides/Sync-Vs-Async.html)[[2]](https://answers.ros.org/question/358343/rate-and-sleep-function-in-rclpy-library-for-ros2/)) (***Need to check***)
 
 ## Twist message axis and drone axis
@@ -80,10 +79,20 @@ See this [guide](./wiki/development.md)
 
 ***The library from clydemcqueen is now used as a driver***
 
-* [ROS1 package](https://wiki.ros.org/tello_driver)
-* [Lib from clydemcqueen](https://github.com/clydemcqueen/tello_ros). Disadvantages:
-  * Always shows the original video stream from the drone with fixed name
-  * It is impossible to send more than two TelloAction, and the second TelloAction call blocks the node forever
-  * `Call` (not `call_async`) on TelloAction service does not work
-* [Lib from tentone](https://github.com/tentone/tello-ros2)
-* [Lib from MoynaChen](https://github.com/MoynaChen/Tello_ROS)
+### [ROS1 package](https://wiki.ros.org/tello_driver)
+
+### [Lib from clydemcqueen](https://github.com/clydemcqueen/tello_ros)
+
+***Last commit***: 17 February 2022
+
+***The oldest opened pull-request***: 2 December 2020
+
+***Opened issues since 2018***
+
+Disadvantages:  
+* Always shows the original video stream from the drone with fixed name
+* Problems with sending commands to the drone. Commands are sent using ros service. Currently it is impossible to send more than two TelloAction, and the second TelloAction call blocks the client node forever
+* `Call` (not `call_async`) on TelloAction service blocks the client node forever
+### [Lib from tentone](https://github.com/tentone/tello-ros2)
+
+### [Lib from MoynaChen](https://github.com/MoynaChen/Tello_ROS)
