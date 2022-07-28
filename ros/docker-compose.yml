@@ -8,8 +8,7 @@ services:
       - /dev/input:/dev/input
     environment:
       DISPLAY: $DISPLAY
-      PYTHONUNBUFFERED: 1
-      NO_AT_BRIDGE: 1
+      SOLUTION_NAME: "marker_follower"
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
     ports:
