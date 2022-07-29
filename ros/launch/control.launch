@@ -1,5 +1,0 @@
-<launch>
-  <node pkg="tello_driver" exec="tello_driver_main" name="tello_driver_main" namespace="tello" output="screen"/>
-  <node pkg="tello_driver" exec="tello_joy_main" name="tello_joy_main" namespace="tello" output="screen"/>
-  <node pkg="joy" exec="joy_node" name="tello_joy_main" namespace="tello" output="screen"/>
-</launch>

@@ -6,6 +6,8 @@ RUN apt-get update && \
         ros-foxy-image-view \
         ros-foxy-cv-bridge \
         ros-foxy-joy \
+        ros-foxy-camera-calibration \
+        ros-foxy-rqt-console \
         libasio-dev \
         python3-rosinstall \
         python3-pip \
@@ -17,10 +19,10 @@ SHELL ["/bin/bash", "-c"]
 WORKDIR /ros
 COPY ./install_scripts ./install_scripts
 RUN ./install_scripts/build_tello_ros.sh
-COPY requiremetns.txt requiremetns.txt
-RUN pip3 install -r requiremetns.txt && mkdir src
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt && mkdir src
 COPY ./tello_ros ./src/tello_ros
 RUN colcon build
-COPY ./launch/ ./scripts/ ./
+COPY ./launch/ ./scripts/ ./camera_settings/camera.yaml ./
 
 ENTRYPOINT ["/bin/bash", "-c", "./start.sh"]
