@@ -16,7 +16,7 @@ class ArUcoMarkerFollower(BasicTelloSolutionNode):
     FONT_COLOR = (0, 255, 0)
     FONT_STOKE = 2
     LINE_STEP = 30
-    TIMEOUT = 1
+    TIMEOUT = 0.8
 
     def __init__(self):
         super().__init__("aruco_marker_follower")
