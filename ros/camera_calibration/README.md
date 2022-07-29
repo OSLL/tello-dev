@@ -2,7 +2,7 @@
 
 *Build container*: `docker-compose -f docker-compose-camera-calibration.yml build`
 
-*Run container*: `./calibrate_camera.sh`
+*Run container*: `./start_camera_calibration.sh`
 
 After calibration, the results are saved in `/tmp` directory inside the container.
 Use `get_camera_settings.sh` script to retrieve the results from the container.
