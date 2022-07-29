@@ -19,8 +19,8 @@ SHELL ["/bin/bash", "-c"]
 WORKDIR /ros
 COPY ./install_scripts ./install_scripts
 RUN ./install_scripts/build_tello_ros.sh
-COPY requiremetns.txt requiremetns.txt
-RUN pip3 install -r requiremetns.txt && mkdir src
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt && mkdir src
 COPY ./tello_ros ./src/tello_ros
 RUN colcon build
 COPY ./launch/ ./scripts/ ./camera_settings/camera.yaml ./

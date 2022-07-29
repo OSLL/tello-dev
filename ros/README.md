@@ -42,6 +42,10 @@ Available commands:
     * Left/Right -- move drone left/right
 * Stop the container with the `stop.sh` script (or Ctrl+C)
 
+## Camera calibration
+
+Go to [camera_calibration directory](./camera_calibration)
+
 ## Development
 
 See this [guide](./wiki/development.md)
