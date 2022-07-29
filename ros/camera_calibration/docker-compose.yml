@@ -3,7 +3,7 @@ services:
   tello-ros-camera-calibration:
     container_name: tello-ros-camera-calibration
     build:
-      context: .
+      context: ../
       dockerfile: Dockerfile.calibrate.camera
     environment:
       DISPLAY: $DISPLAY
