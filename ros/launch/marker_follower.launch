@@ -15,14 +15,12 @@
   </node>
   <node pkg="joy" exec="joy_node" name="tello_joy_main" namespace="input" output="screen"/>
   <!-- end of drone manual control -->
-  <node pkg="tello_ros" exec="image_processing" name="image_processing" namespace="processing" output="log">
-    <remap from="input_images" to="/tello/image_raw"/>
-    <remap from="flight_status" to="/tello/flight_data"/>
-  </node>
-  <node pkg="tello_ros" exec="tello_simple_solution" name="tello_simple_solution" namespace="solution" output="log">
+  <node pkg="tello_ros" exec="marker_follower" name="follower" namespace="solution" output="log">
     <remap from="out_cmd_vel" to="/tello/cmd_vel"/>
     <remap from="srv_tello_action" to="/tello/tello_action"/>
     <remap from="action_response" to="/tello/tello_response"/>
+    <remap from="input_images" to="/tello/image_raw"/>
+    <remap from="flight_status" to="/tello/flight_data"/>
   </node>
   <node pkg="image_view" exec="image_view" name="image_view" namespace="view" output="screen">
     <remap from="image" to="/solution/output_images"/>

@@ -1,18 +1,15 @@
 version: "3"
 services:
-  tello-ros:
-    container_name: tello-ros
-    build: .
-    devices:
-      - /dev/dri:/dev/dri
-      - /dev/input:/dev/input
+  tello-ros-camera-calibration:
+    container_name: tello-ros-camera-calibration
+    build:
+      context: ../
+      dockerfile: Dockerfile.calibrate.camera
     environment:
       DISPLAY: $DISPLAY
-      SOLUTION_NAME: "marker_follower"
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
     ports:
       - 8889:8889/udp
       - 8890:8890/udp
       - 11111:11111/udp
-    

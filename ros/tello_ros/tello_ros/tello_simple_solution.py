@@ -4,13 +4,12 @@ from rclpy.node import Node
 from geometry_msgs.msg import Twist
 from std_msgs.msg import Bool
 from tello_msgs.srv import TelloAction
-from tello_ros.basic_tello_control_node import BasicTelloControlNode
+from tello_ros.basic_tello_solution_node import BasicTelloSolutionNode
 
-class TelloSimpleSolution(BasicTelloControlNode):
+class TelloSimpleSolution(BasicTelloSolutionNode):
 
     def __init__(self):
         super().__init__("tello_publisher")
-        self.start_node()
         self.timer = self.create_timer(1.5, self.timer_callback)
 
     def timer_callback(self):
@@ -21,8 +20,8 @@ class TelloSimpleSolution(BasicTelloControlNode):
             self.direction *= -1
         self.skip_action = (self.skip_action + 1) % 2
 
-    def start_node(self):
-        super().start_node()
+    def run_solution(self):
+        super().run_solution()
         self.direction = 1
         self.skip_action = 0
 
