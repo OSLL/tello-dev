@@ -50,6 +50,11 @@ class BasicTelloSolutionNode(Node):
         msg.angular.z = rotation
         self.cmd_vel_pub.publish(msg)
 
+    def send_tello_action_async(self, cmd):
+        request = TelloAction.Request()
+        request.cmd = cmd
+        self.srv_action.call_async(request)
+
     def send_tello_action(self, cmd):
         if self.received_response is not None:
             return False

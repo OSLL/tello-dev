@@ -21,8 +21,9 @@
     <remap from="action_response" to="/tello/tello_response"/>
     <remap from="input_images" to="/tello/image_raw"/>
     <remap from="flight_status" to="/tello/flight_data"/>
+    <remap from="output_images" to="/sol/out_img"/>
   </node>
   <node pkg="image_view" exec="image_view" name="image_view" namespace="view" output="screen">
-    <remap from="image" to="/solution/output_images"/>
+    <remap from="image" to="/sol/out_img"/>
   </node>
 </launch>
