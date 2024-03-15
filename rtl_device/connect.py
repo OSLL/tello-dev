@@ -3,7 +3,9 @@ import wifi
 import subprocess
 import netifaces
 import docker
+import sys
 from loguru import logger
+from typing import NoReturn
 
 # Необходимо установить wireless-tools, network-manager
 
@@ -13,7 +15,7 @@ def readNetworkConfiguration(json_path):
         return json.load(json_file)
 
 
-def connect(iface, ssid, password) -> bool:
+def connect(iface: str, ssid: str, password: str) -> bool:
     logger.info(f"Connecting device \'{iface}\' to \'{ssid}\'")
     scanner = wifi.Cell.all(iface)
     available_networks = [cell.ssid for cell in scanner]
@@ -37,11 +39,12 @@ def connect(iface, ssid, password) -> bool:
     except Exception as e:
         logger.critical(e)
         logger.debug(output)
+        sys.exit(-1)
 
     return False
 
 
-def createDockerNetwork(name, iface, gateway, subnet):
+def createDockerNetwork(name: str, iface: str, gateway: str, subnet: str) -> NoReturn:
     options = dict({("parent", iface)})
     srv_pool = docker.types.IPAMPool(subnet=subnet, gateway=gateway)
     ipam = docker.types.IPAMConfig(pool_configs=[srv_pool])
@@ -61,7 +64,7 @@ if __name__ == "__main__":
     config = readNetworkConfiguration("networks.json")
     ifaces = config["ifaces"]
     docker_networks = config["docker_networks"]
-    
+
     for iface in ifaces:
         connect(iface, ifaces[iface]['ssid'], ifaces[iface]['password'])
     for network in docker_networks:
