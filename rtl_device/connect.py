@@ -7,8 +7,6 @@ import sys
 from loguru import logger
 from typing import NoReturn
 
-# Необходимо установить wireless-tools, network-manager
-
 
 def readNetworkConfiguration(json_path):
     with open(json_path) as json_file:
