@@ -1,5 +1,7 @@
 import cv2
+import os
 import numpy as np
+from utils.load_camera_settings import load_camera_settings
 
 # Config for following solutions
 
@@ -15,13 +17,13 @@ STEP = 25
 Z_STEP = 25
 SPEED = 50
 QUEUE_SIZE = 100
-MARKER_LEN = 0.1
-camera_matrix = np.array([[1000, 0, 320], [0, 1000, 240], [0, 0, 1]], dtype=np.float32)
-camera_distortion = np.array([0.1, 0.2, 0.0, 0.0, 0.0], dtype=np.float32)
+MARKER_LEN = 6.5
+
+camera_matrix, camera_distortion = load_camera_settings()
+
 
 DISTANCE = 125  # in cm
 DISTANCE_RANGE = 25
 
 ARUCO_DICT = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_250)
 ARUCO_PARAMS = cv2.aruco.DetectorParameters()
-ARUCO_DET = cv2.aruco.ArucoDetector(ARUCO_DICT, ARUCO_PARAMS)
