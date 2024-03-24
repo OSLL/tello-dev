@@ -9,11 +9,13 @@
     <remap from="output_cmd_vel" to="/tello/cmd_vel"/>
     <remap from="output_tello_action" to="/tello/tello_action"/>
   </node>
-  <node pkg="tello_driver" exec="tello_joy_main" name="tello_joy_main" namespace="input" output="screen">
+  <!-- <node pkg="tello_driver" exec="tello_joy_main" name="tello_joy_main" namespace="input" output="screen">
     <remap from="cmd_vel" to="/middleware/input_cmd_vel"/>
     <remap from="tello_action" to="/middleware/input_tello_action"/>
+  </node> -->
+  <node pkg="joy" exec="joy_node" name="tello_joy_main" namespace="input" output="screen">
+    <remap from="joy" to="/joy"/>
   </node>
-  <node pkg="joy" exec="joy_node" name="tello_joy_main" namespace="input" output="screen"/>
   <!-- end of drone manual control -->
   <node pkg="tello_ros" exec="marker_follower" name="follower" namespace="solution" output="log">
     <remap from="out_cmd_vel" to="/tello/cmd_vel"/>
@@ -25,5 +27,9 @@
   </node>
   <node pkg="image_view" exec="image_view" name="image_view" namespace="view" output="screen">
     <remap from="image" to="/sol/out_img"/>
+  </node>
+  <node pkg="tello_ros" exec="tello_joy_node" name="tello_joy_node" namespace="middleware" output="log">
+    <remap from="cmd_vel" to="/middleware/input_cmd_vel"/>
+    <remap from="srv_tello_action" to="/middleware/input_tello_action"/>
   </node>
 </launch>

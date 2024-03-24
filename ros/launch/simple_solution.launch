@@ -27,4 +27,7 @@
   <node pkg="image_view" exec="image_view" name="image_view" namespace="view" output="screen">
     <remap from="image" to="/solution/output_images"/>
   </node>
+  <node pkg="image_view" exec="image_view" name="image_view" namespace="view" output="screen">
+    <remap from="image" to="/processing/output_images"/>
+  </node>
 </launch>

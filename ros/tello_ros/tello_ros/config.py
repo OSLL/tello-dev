@@ -3,7 +3,7 @@ import numpy as np
 from tello_ros.utils import read_camera_settings
 
 
-MARKER_NUMBER = 419
+MARKER_NUMBER = 304
 MARKER_LEN = 6.5  # in cm
 mtx, dist = read_camera_settings("camera.yaml")
 

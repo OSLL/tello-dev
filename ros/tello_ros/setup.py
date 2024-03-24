@@ -24,7 +24,8 @@ setup(
             'image_processing = tello_ros.image_processing:main',
             'marker_follower = tello_ros.aruco_marker_follower:main',
             'manager_node = tello_ros.manager_node:main',
-            'middleware_joy_node = tello_ros.middleware_joy_node:main'
+            'middleware_joy_node = tello_ros.middleware_joy_node:main',
+            'tello_joy_node = tello_ros.tello_joy_node:main',
         ],
     },
 )
