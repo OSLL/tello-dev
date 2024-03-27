@@ -1,15 +1,15 @@
 # Итерация 2
 ## Версия 1
-Чтобы запустить рой из одного дрона [(полная инструкция запуска одиночного дрона)](https://github.com/OSLL/tello-dev/wiki/%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA-%D0%BE%D0%B4%D0%B8%D0%BD%D0%BE%D1%87%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B4%D1%80%D0%BE%D0%BD%D0%B0), необходимо выполнить следующие команды:  
-`pip install -r requirements.txt`  
-`python run_singel_drone.py -x 50 -y 30 -z 20`
+Чтобы запустить рой из одного дрона [(wiki скрипта)](https://github.com/OSLL/tello-dev/wiki/%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA-%D0%BE%D0%B4%D0%B8%D0%BD%D0%BE%D1%87%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B4%D1%80%D0%BE%D0%BD%D0%B0), необходимо выполнить следующие команды:  
+`docker build -t single_drone_swarm .` 
+`sudo docker run single_drone_swarm`
 [Видео запуска из лаборатории](https://drive.google.com/file/d/1U_BEifhNsm7GAZkeG5-yhBLDRsZn3LQ_/view)
-## Скрипты для создания физических сетевых интерфейсов
-Инструкция находится на [wiki-странице](https://github.com/OSLL/tello-dev/wiki/%D0%A4%D0%B8%D0%B7%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5-%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%BE). Необходим wifi-адаптер Realtek 802.11ac.
+## Скрипты для создания физических сетевых интерфейсов в сети docker
+Инструкция находится на [wiki-странице](https://github.com/OSLL/tello-dev/wiki/%D0%A4%D0%B8%D0%B7%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5-%D1%83%D1%81%D1%82%D1%80%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%BE). Работает по wifi-адаптер Realtek 802.11ac.
 ## Для создания контейнеров для каждого дрона, подключаемых к созданной сети
 `docker build -t single_drone_swarm .`  
-
-`python run_swarm.py` 
+`python run_swarm.py`   
+Контейнеры отключаются через 21 секунду без дронов.
 ## Презентация и видео
 [Видео запуска из лаборатории](https://drive.google.com/file/d/1U_BEifhNsm7GAZkeG5-yhBLDRsZn3LQ_/view)  
 Презентация:[ОУПРПО. Итерация 2. Проект 12.pdf](https://github.com/OSLL/tello-dev/files/14780046/2.12.pdf)
