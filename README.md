@@ -11,8 +11,8 @@
 
 `python run_swarm.py` 
 ## Презентация и видео
-[Видео запуска из лаборатории](https://drive.google.com/file/d/1U_BEifhNsm7GAZkeG5-yhBLDRsZn3LQ_/view)
-[ОУПРПО. Итерация 2. Проект 12.pdf](https://github.com/OSLL/tello-dev/files/14780046/2.12.pdf)
+[Видео запуска из лаборатории](https://drive.google.com/file/d/1U_BEifhNsm7GAZkeG5-yhBLDRsZn3LQ_/view)  
+Презентация:[ОУПРПО. Итерация 2. Проект 12.pdf](https://github.com/OSLL/tello-dev/files/14780046/2.12.pdf)
 
 #
 #
