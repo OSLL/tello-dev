@@ -1,6 +1,4 @@
 import cv2
-import os
-import numpy as np
 from utils.load_camera_settings import load_camera_settings
 
 # Config for following solutions
@@ -20,7 +18,6 @@ QUEUE_SIZE = 100
 MARKER_LEN = 6.5
 
 camera_matrix, camera_distortion = load_camera_settings()
-
 
 DISTANCE = 125  # in cm
 DISTANCE_RANGE = 25
