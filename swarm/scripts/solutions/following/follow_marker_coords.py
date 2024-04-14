@@ -5,7 +5,7 @@ import numpy as np
 from queue import Queue, Empty
 from drone.drone import Drone
 from swarm.scripts.solutions.following.config import FRAME_RATE, FRAME_SIZE, DISTANCE, DISTANCE_RANGE,\
-    ARUCO_DICT, ARUCO_PARAMS, QUEUE_SIZE, TIMEOUT, MARKER_NUMBER, SPEED
+    ARUCO_DICT, ARUCO_PARAMS, QUEUE_SIZE, TIMEOUT, MARKER_CENTER, MARKER_MOVE, MARKER_STOP, SPEED
 from swarm.scripts.solutions.following.config import camera_matrix, camera_distortion, MARKER_LEN
 from swarm.scripts.solutions.following.state import State
 from utils.write_text import write_status_on_image
@@ -45,15 +45,19 @@ class FollowMarkerWithCoords():
         corners, ids, rejected = cv2.aruco.detectMarkers(frame, ARUCO_DICT, parameters=ARUCO_PARAMS)
         if ids is not None:
             for i in range(len(ids)):
-                if ids[i] == MARKER_NUMBER:
+                if ids[i] == MARKER_CENTER:
+                    return (ids[i], corners[i])
+                if ids[i] == MARKER_STOP:
+                    return (ids[i], corners[i])
+                if ids[i] == MARKER_MOVE:
                     return (ids[i], corners[i])
         return None
 
     def move_to_marker(self, m_corner):
         self.last_time = time.process_time()
-        _ , tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(np.array([m_corner]), MARKER_LEN, camera_matrix, camera_distortion)
+        _ , rvecs, tvecs = cv2.aruco.estimatePoseSingleMarkers(np.array([m_corner]), MARKER_LEN, camera_matrix, camera_distortion)
         state = self.get_state(tvecs[0][0])
-        if state is not None:
+        if state == State.MOVE:
             self.actions.put(state)
             self.last_state = state
 
