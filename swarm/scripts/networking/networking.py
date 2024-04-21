@@ -101,7 +101,7 @@ def read_network_configuration(json_path):
             "ifaces": {
                 "type": "object",
                 "patternProperties": {
-                    "^[a-zA-Z0-9-]*$": {
+                    "^[a-zA-Z0-9-]+$": {
                         "type": "object",
                         "properties": {
                             "ssid": {"type": "string"},
