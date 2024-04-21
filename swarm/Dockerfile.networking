@@ -10,7 +10,7 @@ RUN apt update \
         python3 \
         python3-pip 
 RUN pip install --upgrade jsonschema 
-COPY networking.py /networking.py
-COPY networks.json /networks.json
+COPY /scripts/networking/networking.py /networking.py
+COPY /networks.json /networks.json
 
 ENTRYPOINT ["python3", "networking.py", "/networks.json"]
