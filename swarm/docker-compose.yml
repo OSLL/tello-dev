@@ -1,0 +1,40 @@
+version: "3"
+services:
+  networking:
+    build: 
+      context: .
+      dockerfile: Dockerfile.networking
+    network_mode: "host"
+    container_name: networking
+    restart: no
+    privileged: true
+    volumes:
+      - /var/run/dbus:/var/run/dbus
+    
+  drone_1:
+    build:
+      context: .
+      dockerfile: Dockerfile.swarm_node
+    depends_on:
+      - networking
+    networks:
+      swarm:
+        ipv4_address: 172.18.0.3
+
+  drone_2:
+    build:
+      context: .
+      dockerfile: Dockerfile.swarm_node
+    depends_on:
+      - networking
+    networks:
+      swarm:
+        ipv4_address: 172.18.0.4
+
+networks:
+  swarm:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 172.18.0.0/16
+         gateway: 172.18.0.1
