@@ -14,14 +14,11 @@ def main():
     args = parser.parse_args()
 
     if args.command:
-        print(f'Executing command: {args.command}')
         if args.ip:
-            print(f'IP Address: {args.ip}')
-            url = "http://" + {args.ip} + ":65001"
-
-            req = request(url, "exec", args.command)
+            url = f"http://{args.ip}:65001"
+            req = request("exec", params={ "command": args.command} )
             response = requests.post(url, json=req)
-            print(f"RESULT for '{url}' : {response.json()}")
+            print(f"RESULT for '{url}' :\n\t {response.json()}")
         else:
             print('No IP address provided.')
     else:

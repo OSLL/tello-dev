@@ -11,7 +11,7 @@ def exec(command: str) -> str:
     """
     for node in SWARM:
         url = f"http://{node}:65000"
-        req = request(url, "exec", command)
+        req = request("exec", command)
         response = requests.post(url, json=req)
         print(f"RESULT for '{url}' : {response}")
 
