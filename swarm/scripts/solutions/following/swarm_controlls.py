@@ -103,7 +103,8 @@ class FollowMarkerWithCoords():
 
     def make_action(self, m_corner):
         self.last_time = time.process_time()
-        rvecs , tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(np.array([m_corner]), MARKER_LEN, camera_matrix, camera_distortion)
+        rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(np.array([m_corner]), MARKER_LEN, camera_matrix,
+                                                              camera_distortion)
         state = self.get_state(tvecs[0][0])
         if state == State.MOVE:
             self.actions.put(state)
@@ -111,15 +112,15 @@ class FollowMarkerWithCoords():
 
     def marker_coords(self, m_corner, marker_id):
         self.last_time = time.process_time()
-        _ , tvecs, _  = cv2.aruco.estimatePoseSingleMarkers(np.array([m_corner]), MARKER_LEN, camera_matrix,
-                                                              camera_distortion)
+        _, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(np.array([m_corner]), MARKER_LEN, camera_matrix,
+                                                          camera_distortion)
         tvec = tvecs[0][0]
         marker_x, marker_y, marker_z = tvec[2], tvec[0], tvec[1]
         x = z = y = 0
         drone_x = x + marker_x
         drone_y = y + marker_y
         drone_z = z + marker_z
-        print(drone_x,drone_y,drone_x)
+        print(drone_x, drone_y, drone_x)
         angle_radians = math.radians(self.num_of_rotates)
 
         # Преобразуем угол поворота в матрицу поворота
@@ -140,19 +141,30 @@ class FollowMarkerWithCoords():
 
         # Добавляем смещение для учета положения дрона относительно маркера
         if marker_id == MARKER_CENTER:
-            x = y = z = 0 # may be z = 50
+            x = y = z = 0  # may be z = 50
             x = x + drone_x_zero
             y = y + drone_y_zero
             z = z + drone_z_zero
-            self.coord_drone = (x,y,z)
+            self.coord_drone = (x, y, z)
+            print(f"{self.drone_id}, {x}, {y}, {z}\n")
             self.save_drone_info(f"{self.drone_id}, {x}, {y}, {z}\n")
         elif marker_id == MARKER_MOVE:
-            x = y = z = 0 # may be z = 50
+            x = y = z = 0  # may be z = 50
             x = x + drone_x_zero + self.coord_drone[0]
             y = y + drone_y_zero + self.coord_drone[1]
             z = z + drone_z_zero + self.coord_drone[2]
             self.save_drone_info(f"MARKER_MOVE, {x}, {y}, {z}\n")
         return 0
+
+    def save_drone_info(self, string):
+        try:
+            with open(".\drone_flight_logs.txt", 'a') as file:
+                file.write(string)
+            print(f"Координаты успешно сохранены в файл drone_flight_logs.txt")
+            return True
+        except Exception as e:
+            print(f"Ошибка при сохранении координат: {e}")
+            return False
 
     def process_frame(self, frame):
         ids = None
