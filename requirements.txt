@@ -6,3 +6,6 @@ wifi
 netifaces
 docker
 loguru
+jsonrpcclient
+jsonrpcserver
+requests

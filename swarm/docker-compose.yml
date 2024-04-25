@@ -10,8 +10,32 @@ services:
     privileged: true
     volumes:
       - /var/run/dbus:/var/run/dbus
+    logging:
+      driver: "json-file"  
+      options:
+        max-size: "10m" 
+
+  server:
+    container_name: server
+    build:
+      context: .
+      dockerfile: Dockerfile.swarm_server
+    depends_on:
+      - networking
+      - drone_1
+      - drone_2
+    networks:
+      swarm:
+        ipv4_address: 172.18.0.2
+    ports:
+      - "65001:65001"
+    logging:
+      driver: "json-file"  
+      options:
+        max-size: "10m" 
     
   drone_1:
+    container_name: drone_1
     build:
       context: .
       dockerfile: Dockerfile.swarm_node
@@ -20,8 +44,13 @@ services:
     networks:
       swarm:
         ipv4_address: 172.18.0.3
+    logging:
+      driver: "json-file"  
+      options:
+        max-size: "10m" 
 
   drone_2:
+    container_name: drone_2
     build:
       context: .
       dockerfile: Dockerfile.swarm_node
@@ -30,6 +59,10 @@ services:
     networks:
       swarm:
         ipv4_address: 172.18.0.4
+    logging:
+      driver: "json-file"  
+      options:
+        max-size: "10m" 
 
 networks:
   swarm:
