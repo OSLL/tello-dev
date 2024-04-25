@@ -109,6 +109,51 @@ class FollowMarkerWithCoords():
             self.actions.put(state)
             self.last_state = state
 
+    def marker_coords(self, m_corner, marker_id):
+        self.last_time = time.process_time()
+        _ , tvecs, _  = cv2.aruco.estimatePoseSingleMarkers(np.array([m_corner]), MARKER_LEN, camera_matrix,
+                                                              camera_distortion)
+        tvec = tvecs[0][0]
+        marker_x, marker_y, marker_z = tvec[2], tvec[0], tvec[1]
+        x = z = y = 0
+        drone_x = x + marker_x
+        drone_y = y + marker_y
+        drone_z = z + marker_z
+        print(drone_x,drone_y,drone_x)
+        angle_radians = math.radians(self.num_of_rotates)
+
+        # Преобразуем угол поворота в матрицу поворота
+        R = np.array([[np.cos(angle_radians), -np.sin(angle_radians), 0],
+                      [np.sin(angle_radians), np.cos(angle_radians), 0],
+                      [0, 0, 1]])
+
+        # Исходные координаты дрона
+        drone_coords = np.array([drone_x, drone_y, drone_z])
+
+        # Применяем поворот к координатам дрона
+        rotated_coords = np.dot(R, drone_coords)
+
+        # Добавляем координаты нулевой позиции дрона
+        drone_x_zero = int(rotated_coords[0])
+        drone_y_zero = int(rotated_coords[1])
+        drone_z_zero = int(rotated_coords[2])
+
+        # Добавляем смещение для учета положения дрона относительно маркера
+        if marker_id == MARKER_CENTER:
+            x = y = z = 0 # may be z = 50
+            x = x + drone_x_zero
+            y = y + drone_y_zero
+            z = z + drone_z_zero
+            self.coord_drone = (x,y,z)
+            self.save_drone_info(f"{self.drone_id}, {x}, {y}, {z}\n")
+        elif marker_id == MARKER_MOVE:
+            x = y = z = 0 # may be z = 50
+            x = x + drone_x_zero + self.coord_drone[0]
+            y = y + drone_y_zero + self.coord_drone[1]
+            z = z + drone_z_zero + self.coord_drone[2]
+            self.save_drone_info(f"MARKER_MOVE, {x}, {y}, {z}\n")
+        return 0
+
     def process_frame(self, frame):
         ids = None
         is_find = True
