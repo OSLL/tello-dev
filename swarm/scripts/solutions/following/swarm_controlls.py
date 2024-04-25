@@ -43,8 +43,51 @@ class FollowMarkerWithCoords():
     #     if not self.drone_id:
     #         self.drone_id = -1
 
+    def move_to_marker(self):
+        coordinates = {}
+        move_marker = None
+        try:
+            with open("drone_flight_logs.txt", 'r') as file:
+                lines = file.readlines()
+                for line in lines:
+                    # Разделяем строку на координаты и преобразуем их в числа
+                    target, x, y, z = map(float, line.strip().split(','))
+                    coordinates[target] = (x, y, z)  # 1-3 dron_id, 4 - MARKER_MOVE, 5 - MARKER_STOP
+                    if target == "MARKER_MOVE":
+                        print(coordinates)
 
+            print(f"Координаты успешно прочитаны из файла drone_flight_logs.txt")
+        except Exception as e:
+            print(f"Ошибка при чтении координат из файла: {e}")
 
+        x, y, z = coordinates.get("MARKER_MOVE")
+        x_un = self.coord_drone[0] - x
+        y_un = self.coord_drone[1] - y
+        z_un = self.coord_drone[2] - z
+        self.coord_drone = (x_un, y_un, z_un)
+        coord_drone = (x_un, y_un, z_un)
+        angle_degrees = 360 - self.num_of_rotates
+
+        # Получаем матрицу поворота из вектора ориентации
+        angle_radians = math.radians(angle_degrees)
+
+        # Преобразуем угол поворота в матрицу поворота
+        R = np.array([[np.cos(angle_radians), -np.sin(angle_radians), 0],
+                      [np.sin(angle_radians), np.cos(angle_radians), 0],
+                      [0, 0, 1]])
+
+        # Исходные координаты дрона
+        drone_coords = np.array(coord_drone)
+
+        # Применяем поворот к координатам дрона
+        rotated_coords = np.dot(R, drone_coords)
+
+        # Добавляем координаты нулевой позиции дрона
+        x = int(rotated_coords[0] - 10)
+        y = int(rotated_coords[1])
+        z = int(rotated_coords[2])
+
+        return (State.MOVE, np.array([x, y, z], dtype=np.int32))
 
     def find_marker(self, frame):
         corners, ids, rejected = cv2.aruco.detectMarkers(frame, ARUCO_DICT, parameters=ARUCO_PARAMS)
@@ -65,8 +108,6 @@ class FollowMarkerWithCoords():
         if state == State.MOVE:
             self.actions.put(state)
             self.last_state = state
-
-   
 
     def process_frame(self, frame):
         ids = None
