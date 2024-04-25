@@ -5,17 +5,19 @@ FRAME_RATE = 30
 FRAME_SIZE = (960, 720)
 MARKER_SIZE = 50  # in pixels
 MARKER_SIZE_RANGE = 15
+MARKER_NUMBER = 304
 MARKER_CENTER = 304
-MARKER_STOP = 303  # random
-MARKER_MOVE = 302  # random
+MARKER_STOP = 305  # random
+MARKER_MOVE = 301  # random
 X_RANGE = 125
 Y_RANGE = 125
-TIMEOUT = 10
+TIMEOUT = 20
 STEP = 25
 Z_STEP = 25
 SPEED = 50
 QUEUE_SIZE = 100
 MARKER_LEN = 6.5
+ROTATE_DEGREE = 45
 
 camera_matrix, camera_distortion = load_camera_settings()
 

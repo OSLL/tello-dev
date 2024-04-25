@@ -1,4 +1,4 @@
-from swarm.scripts.solutions.following.follow_marker_coords import FollowMarkerWithCoords
+from swarm.scripts.solutions.following.swarm_controlls import FollowMarkerWithCoords
 
 if __name__ == "__main__":
     marker_follower = FollowMarkerWithCoords()
