@@ -1,3 +1,80 @@
+# Итерация 3
+Зависимости:  
+Версия ОС: Ubuntu 22.04.4 LTS  
+Python 3.10.12
+
+## Конфигурирование
+Заполнить [конфигурационный файл](https://github.com/OSLL/tello-dev/blob/master/swarm/networks.json)
+```json
+{
+    "ifaces" : {
+        "iface-name" : {
+            "ssid" : "",
+            "password" : "",
+            "ip": "172.18.0.3"
+        },
+        "iface-name": {
+            "ssid" : "",
+            "password" : "",
+            "ip": "172.18.0.4"
+        }
+    }
+}
+```
+- Необходимо выполнить команду `ip a` и вставить имена необходимых wlan-интерфейсов вместо `iface-name`.
+- Установить пакет `network-manager`:
+  `apt install network-manager=1.36.6-0ubuntu2`
+- Выполнить команду `nmcli dev wifi scan` и определить SSID wifi сетей причастных к дрону и вставить вместо `ssid`
+
+**Пример сконфигурированного файла**
+```json
+{
+    "ifaces" : {
+        "wlo0" : {
+            "ssid" : "DRONE 1",
+            "password" : "",
+            "ip": "172.18.0.3"
+        },
+        "wlo1": {
+            "ssid" : "DRONE 2",
+            "password" : "",
+            "ip": "172.18.0.4"
+        }
+    }
+}
+```
+
+## Запуск
+Установить зависимости  
+```bash
+python3 -m pip install jsonrpcclient==4.0.3 requests==2.31.0
+```
+- Необходимо выполнить команду `docker compose -f ./swarm/docker-compose.yml up -d --build` (в одном месте монтируется с хоста папка и этого не избежать, иначе из контейнера нельзя будет управлять сетевыми устройствами)
+- После запуска необходимо вызвать скрипт *client.py* передав флаги -c <command> --ip <ip>,
+  где:
+  
+  --ip - P-адреса сервера JSON-RPC, к которому скрипт будет отправлять запросы, у нас это 127.0.0.1.
+   
+  -c - команда для дронов.  
+  
+Пример:
+```bash
+python3 ./swarm/scripts/rpc/client.py -c takeoff --ip 127.0.0.1
+```
+Результат:  
+```bash
+RESULT for 'http://127.0.0.1:65001' :
+         {'jsonrpc': '2.0', 'result': 'OK', 'id': 1}
+```
+## Презентация и видео
+[Видео запуска из лаборатории](https://drive.google.com/file/d/1AlVOG27zfj0EoQd7CfunbafDo9c3x55g/view?usp=sharing)  
+[Логи запуска](https://drive.google.com/file/d/1QEGajXq3eJybhvswaCkATVJhRs7hSCsq/view?usp=sharing)  
+Презентация:[ОУПРПО. Итерация 3. Проект 12.pdf](https://github.com/OSLL/tello-dev/files/15123364/3.12.pdf)
+
+
+#
+#
+
 # Итерация 2
 ## Версия 1
 Чтобы запустить рой из одного дрона [(wiki скрипта)](https://github.com/OSLL/tello-dev/wiki/%D0%97%D0%B0%D0%BF%D1%83%D1%81%D0%BA-%D0%BE%D0%B4%D0%B8%D0%BD%D0%BE%D1%87%D0%BD%D0%BE%D0%B3%D0%BE-%D0%B4%D1%80%D0%BE%D0%BD%D0%B0), необходимо выполнить следующие команды:    
