@@ -69,7 +69,7 @@ RESULT for 'http://127.0.0.1:65001' :
 ## Презентация и видео
 [Видео запуска из лаборатории](https://drive.google.com/file/d/1AlVOG27zfj0EoQd7CfunbafDo9c3x55g/view?usp=sharing)  
 [Логи запуска](https://drive.google.com/file/d/1QEGajXq3eJybhvswaCkATVJhRs7hSCsq/view?usp=sharing)  
-Презентация:[ОУПРПО. Итерация 3. Проект 12.pdf](https://github.com/OSLL/tello-dev/files/15123364/3.12.pdf)
+Презентация:[ОУПРПО. Итерация 3. Проект 12](https://drive.google.com/file/d/1SChuYAM4CD_IQHj4QtwAoYbMkWu40w0_/view?usp=sharing)
 
 
 #
