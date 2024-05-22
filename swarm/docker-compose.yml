@@ -1,4 +1,3 @@
-version: "3"
 services:
   networking:
     build: 
@@ -11,9 +10,9 @@ services:
     volumes:
       - /var/run/dbus:/var/run/dbus
     logging:
-      driver: "json-file"  
+      driver: "json-file"
       options:
-        max-size: "10m" 
+        max-size: "10m"
 
   server:
     container_name: server
@@ -30,10 +29,10 @@ services:
     ports:
       - "65001:65001"
     logging:
-      driver: "json-file"  
+      driver: "json-file"
       options:
-        max-size: "10m" 
-    
+        max-size: "10m"
+
   drone_1:
     container_name: drone_1
     build:
@@ -45,9 +44,9 @@ services:
       swarm:
         ipv4_address: 172.230.220.3
     logging:
-      driver: "json-file"  
+      driver: "json-file"
       options:
-        max-size: "10m" 
+        max-size: "10m"
 
   drone_2:
     container_name: drone_2
@@ -60,14 +59,14 @@ services:
       swarm:
         ipv4_address: 172.230.220.4
     logging:
-      driver: "json-file"  
+      driver: "json-file"
       options:
-        max-size: "10m" 
+        max-size: "10m"
 
 networks:
   swarm:
     driver: bridge
     ipam:
-     config:
-       - subnet: 172.230.220.0/24
-         gateway: 172.230.220.1
+      config:
+        - subnet: 172.230.220.0/24
+          gateway: 172.230.220.1
