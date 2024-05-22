@@ -26,7 +26,7 @@ services:
       - drone_2
     networks:
       swarm:
-        ipv4_address: 172.18.0.2
+        ipv4_address: 172.230.220.2
     ports:
       - "65001:65001"
     logging:
@@ -43,7 +43,7 @@ services:
       - networking
     networks:
       swarm:
-        ipv4_address: 172.18.0.3
+        ipv4_address: 172.230.220.3
     logging:
       driver: "json-file"  
       options:
@@ -58,7 +58,7 @@ services:
       - networking
     networks:
       swarm:
-        ipv4_address: 172.18.0.4
+        ipv4_address: 172.230.220.4
     logging:
       driver: "json-file"  
       options:
@@ -69,5 +69,5 @@ networks:
     driver: bridge
     ipam:
      config:
-       - subnet: 172.18.0.0/16
-         gateway: 172.18.0.1
+       - subnet: 172.230.220.0/24
+         gateway: 172.230.220.1
