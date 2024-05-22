@@ -1,24 +1,27 @@
+version: "3.8"
 services:
   networking:
     build: 
       context: .
-      dockerfile: Dockerfile.networking
+      dockerfile: Dockerfile
     network_mode: "host"
     container_name: networking
     restart: no
     privileged: true
     volumes:
       - /var/run/dbus:/var/run/dbus
+    environment:
+      - SERVICE_NAME=networking
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
 
   server:
-    container_name: server
     build:
       context: .
-      dockerfile: Dockerfile.swarm_server
+      dockerfile: Dockerfile
+    container_name: server
     depends_on:
       - networking
       - drone_1
@@ -28,36 +31,42 @@ services:
         ipv4_address: 172.230.220.2
     ports:
       - "65001:65001"
+    environment:
+      - SERVICE_NAME=server
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
 
   drone_1:
-    container_name: drone_1
     build:
       context: .
-      dockerfile: Dockerfile.swarm_node
+      dockerfile: Dockerfile
+    container_name: drone_1
     depends_on:
       - networking
     networks:
       swarm:
         ipv4_address: 172.230.220.3
+    environment:
+      - SERVICE_NAME=swarm_server
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
 
   drone_2:
-    container_name: drone_2
     build:
       context: .
-      dockerfile: Dockerfile.swarm_node
+      dockerfile: Dockerfile
+    container_name: drone_2
     depends_on:
       - networking
     networks:
       swarm:
         ipv4_address: 172.230.220.4
+    environment:
+      - SERVICE_NAME=swarm_server
     logging:
       driver: "json-file"
       options:
