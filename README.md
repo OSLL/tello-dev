@@ -50,7 +50,7 @@ Python 3.10.12
 ```bash
 python3 -m pip install jsonrpcclient==4.0.3 requests==2.31.0
 ```
-- Необходимо выполнить команду `docker compose -f ./swarm/docker-compose.yml up -d --build` (в одном месте монтируется с хоста папка и этого не избежать, иначе из контейнера нельзя будет управлять сетевыми устройствами)
+- Необходимо выполнить команду `docker compose --file ./swarm/docker-compose.yml up -d --build` (в одном месте монтируется с хоста папка и этого не избежать, иначе из контейнера нельзя будет управлять сетевыми устройствами)
 - После запуска необходимо вызвать скрипт *client.py* передав флаги -c <command> --ip <ip>,
   где:
   
@@ -67,7 +67,16 @@ python3 ./swarm/scripts/rpc/client.py -c takeoff --ip 127.0.0.1
 RESULT for 'http://127.0.0.1:65001' :
          {'jsonrpc': '2.0', 'result': 'OK', 'id': 1}
 ```
-## Презентация и видео
+## Остановка контейнеров
+```bash
+docker compose --file ./swarm/docker-compose.yml stop
+```
+## Удаление контейнеров
+```bash
+docker compose --file ./swarm/docker-compose.yml down
+```
+
+## Презентация 
 Презентация:[ОУПРПО. Итерация 4. Проект 12](https://docs.google.com/presentation/d/15QLL1ix36oWb84pD0Ya88piNtv9CHaV_Dnr0AQvBDYY/edit?usp=sharing)
 
 
